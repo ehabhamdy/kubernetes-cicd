@@ -14,5 +14,5 @@ spec:
     protocol: TCP
     targetPort: 3111
   selector:
-    app: techtrends-app-pod
+    app: techtrends-app
   type: ClusterIP

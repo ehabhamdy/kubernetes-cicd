@@ -1,5 +1,5 @@
 namespace:
-  name: dev 
+  name: prod 
 
 image:
   repository: ehabhamdy/techtrends

@@ -1,0 +1,10 @@
+apiVersion: v1
+name: python-helloworld 
+description: Install a techtrends deployment
+keywords:
+- python
+- techtrends 
+version: 1.0.0
+maintainers:
+- name: ehabhamdy 
+  email: ehabhamdy2012@gmail.com

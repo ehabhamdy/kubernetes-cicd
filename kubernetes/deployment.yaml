@@ -4,9 +4,9 @@ metadata:
   labels:
     app: techtrends-app
   name: techtrends-app
-  namespace: {{ .Values.namespace.name }} 
+  namespace: default 
 spec:
-  replicas: {{ .Values.replicaCount }} 
+  replicas: 1
   selector:
     matchLabels:
       app: techtrends-app
@@ -21,10 +21,14 @@ spec:
         app: techtrends-app
     spec:
       containers:
-      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        imagePullPolicy: IfNotPresent 
-        name: techtrends
-      
+      - image: ehabhamdy/techtrends:latest 
+        imagePullPolicy: IfNotPresent
+        name: techtrends-app
+        # resources:
+        #   requests:
+        #     cpu: 250m
+        #     memory: 64Mi
+
       - containerPort: 3111
           protocol: TCP
 

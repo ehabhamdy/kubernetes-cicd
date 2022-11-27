@@ -4,7 +4,7 @@ metadata:
   labels:
     app: techtrends-app
   name: techtrends-app
-  namespace: default 
+  namespace: project-test 
 spec:
   replicas: 1
   selector:
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        app: techtrends-app
+        app: techtrends-app-pod
     spec:
       containers:
       - image: ehabhamdy/techtrends:latest 

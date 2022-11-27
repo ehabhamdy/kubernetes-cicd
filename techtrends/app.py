@@ -5,6 +5,7 @@ from werkzeug.exceptions import abort
 
 import logging
 import sys
+import os
 
 
 logging.basicConfig(stream=sys.stdout,
@@ -87,7 +88,10 @@ def create():
 @app.route('/healthz')
 def health():
     app.logger.info("Health check triggered")
-    return jsonify({'result': 'OK - healthy'}), 200
+    if os.path.isfile('./database.db'):
+        return jsonify({'result': 'OK - healthy'}), 200
+    else:
+        abort(500)
 
 
 # Define metrics endpoint

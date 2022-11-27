@@ -32,15 +32,15 @@ spec:
                 memory: {{ .Values.resources.limits.memory }}
                 cpu: {{ .Values.resources.limits.cpu }}
         ports:
-        - containerPort: 3111
+        - containerPort: {{ .Values.image.containerPort }}
           protocol: TCP
 
         livenessProbe:
           httpGet:
-            path: {{ .Values.readinessProbe }}
-            port: 3111
+            path: {{ .Values.readinessProbe.httpGet.path }}
+            port: {{ .Values.readinessProbe.httpGet.port }}
 
         readinessProbe:
           httpGet:
-            path: {{ .Values.readinessProbe }}
-            port: 3111
+            path: {{ .Values.readinessProbe.httpGet.path }}
+            port: {{ .Values.readinessProbe.httpGet.port }}

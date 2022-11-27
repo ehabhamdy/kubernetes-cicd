@@ -11,6 +11,7 @@ image:
   repository: ehabhamdy/techtrends
   tag: latest
   pullPolicy: Always
+  containerPort: 3111
 
 replicaCount: 5
 
@@ -22,5 +23,11 @@ resources:
     memory: 256Mi
     cpu: 500m
 
-livenessPorbe: /healthz
-readinessProbe: /healthz
+livenessPorbe: 
+  httpGet:
+    path: /healthz
+    port: 3111
+readinessProbe:
+  httpGet:
+    path: /healthz
+    port: 3111

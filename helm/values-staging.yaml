@@ -1,8 +1,8 @@
 namespace:
-  name: sandbox
+  name: staging
 
 service:
-  port: 7111
+  port: 5111
   targetPort: 3111
   protocol: TCP
   type: ClusterIP
@@ -10,16 +10,16 @@ service:
 image:
   repository: ehabhamdy/techtrends
   tag: latest
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
-replicaCount: 5
+replicaCount: 3
 
 resources:
   requests:
-    memory: 128Mi
-    cpu: 350m
+    memory: 90Mi
+    cpu: 300m
   limits:
-    memory: 256Mi
+    memory: 128Mi
     cpu: 500m
 
 livenessPorbe: /healthz

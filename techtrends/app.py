@@ -13,12 +13,17 @@ logging.basicConfig(stream=sys.stdout,
                     format='%(asctime)s %(levelname)s %(name)s '
                            '%(threadName)s : %(message)s')
 
+# Define the Flask application
+app = Flask(__name__)
+app.config['connection_count'] = 0
+
 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
+    app.config['connection_count'] += 1
     return connection
 
 
@@ -28,12 +33,17 @@ def get_post(post_id):
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                               (post_id,)).fetchone()
     connection.close()
+    app.config['connection_count'] -= 1
     return post
 
 
-# Define the Flask application
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your secret key'
+# Function to get post count
+def get_post_count():
+    connection = get_db_connection()
+    count = connection.execute('SELECT count(*) FROM posts').fetchone()
+    connection.close()
+    app.config['connection_count'] -= 1
+    return count[0]
 
 
 # Define the main route of the web application
@@ -42,6 +52,7 @@ def index():
     connection = get_db_connection()
     posts = connection.execute('SELECT * FROM posts').fetchall()
     connection.close()
+    app.config['connection_count'] -= 1
     return render_template('index.html', posts=posts)
 
 
@@ -98,7 +109,8 @@ def health():
 @app.route('/metrics')
 def metrics():
     app.logger.info("Metrics endpoint triggered")
-    return jsonify({'db_connection_count': 1, 'post_count': 7}), 200
+    return jsonify({'db_connection_count': app.config['connection_count'],
+                    'post_count': get_post_count()}), 200
 
 
 # start the application on port 3111

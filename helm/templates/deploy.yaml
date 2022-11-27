@@ -38,9 +38,9 @@ spec:
         livenessProbe:
           httpGet:
             path: {{ .Values.readinessProbe }}
-            port: TCP
+            port: 3111
 
         readinessProbe:
           httpGet:
             path: {{ .Values.readinessProbe }}
-            port: TCP
+            port: 3111

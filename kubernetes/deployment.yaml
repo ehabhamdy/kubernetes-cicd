@@ -9,7 +9,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: techtrends-app
+      app: techtrends-app-pod
   strategy:
     rollingUpdate:
       maxSurge: 25%

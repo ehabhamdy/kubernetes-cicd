@@ -24,12 +24,8 @@ spec:
       - image: ehabhamdy/techtrends:latest 
         imagePullPolicy: IfNotPresent
         name: techtrends-app
-        # resources:
-        #   requests:
-        #     cpu: 250m
-        #     memory: 64Mi
 
-      - containerPort: 3111
+      containerPort: 3111
           protocol: TCP
 
       livenessProbe:

@@ -15,13 +15,14 @@ logging.basicConfig(stream=sys.stdout,
 
 # Define the Flask application
 app = Flask(__name__)
-app.config['connection_count'] = 0
+app.config['CONNECTION_COUNT'] = 0
 
 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
     connection = sqlite3.connect('database.db')
+    app.config['CONNECTION_COUNT'] += 1
     connection.row_factory = sqlite3.Row
     return connection
 
@@ -105,7 +106,7 @@ def health():
 @app.route('/metrics')
 def metrics():
     app.logger.info("Metrics endpoint triggered")
-    return jsonify({'db_connection_count': app.config['connection_count'],
+    return jsonify({'db_connection_count': app.config['CONNECTION_COUNT'],
                     'post_count': get_post_count()}), 200
 
 

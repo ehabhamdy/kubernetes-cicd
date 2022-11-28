@@ -23,7 +23,6 @@ app.config['connection_count'] = 0
 def get_db_connection():
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
-    app.config['connection_count'] += 1
     return connection
 
 
@@ -33,7 +32,6 @@ def get_post(post_id):
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                               (post_id,)).fetchone()
     connection.close()
-    app.config['connection_count'] -= 1
     return post
 
 
@@ -42,7 +40,6 @@ def get_post_count():
     connection = get_db_connection()
     count = connection.execute('SELECT count(*) FROM posts').fetchone()
     connection.close()
-    app.config['connection_count'] -= 1
     return count[0]
 
 
@@ -52,7 +49,6 @@ def index():
     connection = get_db_connection()
     posts = connection.execute('SELECT * FROM posts').fetchall()
     connection.close()
-    app.config['connection_count'] -= 1
     return render_template('index.html', posts=posts)
 
 
